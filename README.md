@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+npm i -D prisma
+npm i @prisma/client
 
-## Getting Started
+create db.ts exporting PrismaClient()
 
-First, run the development server:
+npx prisma init
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+create neon.tech postgres db (select prisma), update prisma/schema.prisma and .env
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+add model in schema.prisma
+-> authjs.dev -> db adapter -> prisma
+-> copy models
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npx prisma generate
+npx prisma db push
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+authjs.dev -> db adapter -> prisma
+npm i @auth/prisma-adapter
 
-## Learn More
+authjs.dev -> guides -> upgrade to v5
+npm i next-auth@beta
+copy auth.ts, route.ts from docs
+add auth_secret in env
+visit /api/auth/providers
+copy middleware.ts
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+clerk.com -> next js -> auth middleware -> copy matcher for middleware
