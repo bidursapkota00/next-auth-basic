@@ -12,7 +12,12 @@ add model in schema.prisma
 -> copy models
 
 npx prisma generate
+
+<!-- npx prisma migrate reset -->
+
 npx prisma db push
+
+npx prisma studio => runs database viewing server locally
 
 authjs.dev -> db adapter -> prisma
 npm i @auth/prisma-adapter
@@ -25,3 +30,6 @@ visit /api/auth/providers
 copy middleware.ts
 
 clerk.com -> next js -> auth middleware -> copy matcher for middleware
+
+extend user session data
+-> authjs.dev -> getting started -> typescript

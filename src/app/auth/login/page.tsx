@@ -26,6 +26,8 @@ import { Input } from "@/components/ui/input";
 
 import { LoginSchema } from "@/schemas";
 import { login } from "@/actions/login";
+import { signIn } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export default function Login() {
   const [error, setError] = useState<string | undefined>("");
@@ -43,9 +45,15 @@ export default function Login() {
   const loginSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
       login(values).then((data) => {
-        setSuccess(data.success);
-        setError(data.error);
+        setSuccess(data?.success);
+        setError(data?.error);
       });
+    });
+  };
+
+  const googleGithubLogin = (provider: "google" | "github") => {
+    signIn(provider, {
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
   };
   return (
@@ -110,10 +118,10 @@ export default function Login() {
 
       <CardFooter>
         <div className="flex">
-          <Button onClick={() => {}} variant="outline">
+          <Button onClick={() => googleGithubLogin("google")} variant="outline">
             <FcGoogle />
           </Button>
-          <Button onClick={() => {}} variant="outline">
+          <Button onClick={() => googleGithubLogin("github")} variant="outline">
             <FaGithub />
           </Button>
         </div>

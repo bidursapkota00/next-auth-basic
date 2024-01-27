@@ -26,6 +26,8 @@ import { Input } from "@/components/ui/input";
 
 import { RegisterSchema } from "@/schemas";
 import { register } from "@/actions/register";
+import { signIn } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export default function Register() {
   const [error, setError] = useState<string | undefined>("");
@@ -47,6 +49,12 @@ export default function Register() {
         setSuccess(data.success);
         setError(data.error);
       });
+    });
+  };
+
+  const googleGithubRegister = (provider: "google" | "github") => {
+    signIn(provider, {
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
   };
   return (
@@ -132,10 +140,16 @@ export default function Register() {
 
       <CardFooter>
         <div className="flex">
-          <Button onClick={() => {}} variant="outline">
+          <Button
+            onClick={() => googleGithubRegister("google")}
+            variant="outline"
+          >
             <FcGoogle />
           </Button>
-          <Button onClick={() => {}} variant="outline">
+          <Button
+            onClick={() => googleGithubRegister("github")}
+            variant="outline"
+          >
             <FaGithub />
           </Button>
         </div>
