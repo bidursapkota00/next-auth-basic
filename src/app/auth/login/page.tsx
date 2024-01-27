@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useTransition, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
@@ -30,6 +31,13 @@ import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export default function Login() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with different provider!"
+      : "";
+
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -101,11 +109,12 @@ export default function Login() {
                 </FormItem>
               )}
             />
-            {error && (
-              <p className="p-4 bg-destructive/15 rounded-md text-red-500">
-                {error}
-              </p>
-            )}
+            {error ||
+              (urlError && (
+                <p className="p-4 bg-destructive/15 rounded-md text-red-500">
+                  {error || urlError}
+                </p>
+              ))}
             {success && (
               <p className="p-4 bg-emerald-500/15 rounded-md text-emerald-500">
                 {success}
